@@ -1,11 +1,13 @@
 console.clear();
+import "reflect-metadata";
+import { DataSource } from "typeorm";
 import express, { Request, Response, NextFunction } from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import { routes } from "./config/routes";
 import { RouteEngine, AppError, Response as AppResponse } from "./core";
 import dotenv from "dotenv";
 import path from "path";
+import { Sequelize } from "sequelize";
 
 dotenv.config();
 
@@ -69,20 +71,54 @@ app.use((req, res, next) => {
   next();
 });
 
-// console.log(process.argv);
-// console.log(process.argv[1].includes("/node_modules/.bin/jest"));
-mongoose
-  .connect(process.env.MONGODB_URI || "", {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB");
-    const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB:", err);
+process.on("SIGINT", async () => {
+  console.log("Shutting down server...");
+  await sequelize.close();
+  process.exit(0);
+});
+
+// const AppDataSource = new DataSource({
+//   type: "mysql",
+//   host: process.env.DB_HOST || "localhost",
+//   port: parseInt(process.env.DB_PORT || "3306", 10),
+//   username: process.env.DB_USER || "root",
+//   password: process.env.DB_PASSWORD || "",
+//   database: process.env.DB_NAME || "job_board",
+//   synchronize: false,
+//   logging: true,
+//   entities: ["./src/entities/*.ts"], // Path to your TypeORM entity files
+//   migrations: ["./src/migrations/*.ts"], // Path to your TypeORM migration files
+// });
+
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST || "localhost",
+    port: process.env.DB_PORT || 3306,
+    dialect: "mysql",
+    logging: console.log, // Disable logging by setting to `false`
+  }
+);
+
+const connectToDatabase = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connected to MySQL");
+  } catch (error) {
+    console.error("Unable to connect to MySQL:", error);
+    process.exit(1);
+  }
+};
+
+const startServer = async () => {
+  await connectToDatabase();
+
+  const PORT = process.env.PORT || 3005;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
+};
+
+startServer();
