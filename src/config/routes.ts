@@ -4,7 +4,7 @@ export const routes: Routes = {
   jobs: {
     "POST /": {
       handler: "JobController.createJob",
-      middleware: [], // Add middlewares if any
+      middleware: ["validateCreateJob"], // Add middlewares if any
     },
     "GET /": {
       handler: "JobController.listJobs",
