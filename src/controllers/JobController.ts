@@ -72,6 +72,12 @@ export default class AuthController {
     req: Request,
     res: ExpressResponse
   ): Promise<ExpressResponse> {
-    return res.json(Response.success({ success: true }));
+    const result = await jobRepository.softDelete(req.params.jobId);
+    console.log("result - ", result);
+    if (result.affected === 0) {
+      throw AppError.notFound("Job not found");
+    }
+
+    return res.json(Response.success("Job deleted successfully"));
   }
 }
