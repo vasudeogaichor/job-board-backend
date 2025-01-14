@@ -23,8 +23,12 @@ export default function validateCreateJob(
     .map(([key]) => `${key} is required`);
   errors.push(...missingFields);
 
+  if (!validator.isNumeric(salary)) {
+    errors.push("Salary must be numeric");
+  }
+
   if (errors.length > 0) {
-    throw AppError.badRequest("Invalid input", errors);
+    throw AppError.badRequest("Input validation failed", errors);
   }
 
   next();
