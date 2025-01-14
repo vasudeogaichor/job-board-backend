@@ -15,7 +15,5 @@ export type MiddlewareFunction = string;
 export type HandlerFunction = string;
 
 export interface Routes {
-  auth: RouteGroup;
-  // quiz: RouteGroup;
-  // user: RouteGroup;
+  jobs: RouteGroup;
 }
