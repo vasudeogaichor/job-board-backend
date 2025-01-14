@@ -33,8 +33,8 @@ This project provides a RESTful API for managing job postings using:
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/vasudeogaichor/job-board-backend.git
+   cd job-board-backend
    ```
 
 2. **Setup Environment Variables**:
@@ -47,6 +47,8 @@ This project provides a RESTful API for managing job postings using:
    DB_PASSWORD=your_password
    DB_NAME=your_database
    ```
+
+   Also update the same variables in `docker-compose.yml` if you wish to use docker
 
 3. **Start Services with Docker**:
    ```bash
@@ -62,12 +64,12 @@ This project provides a RESTful API for managing job postings using:
    docker exec -it <container_name> npx typeorm migration:run -d ./src/data-source.ts
    ``` -->
 
-<!-- 5. **Seed Initial Data** (Optional):
+4. **Seed Initial Data** (Optional):
    ```bash
    docker exec -it <container_name> ts-node src/seeders/seedJobs.ts
-   ``` -->
+   ```
 
-6. **Access the API**:
+5. **Access the API**:
    The API will be available at `http://localhost:3005`.
 
 ### Local Setup Without Docker (Optional)
