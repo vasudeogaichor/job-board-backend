@@ -76,10 +76,10 @@ export default class RouteEngine {
       try {
         const result = await handler(req, res, next);
         // console.log("result - ", result);
-        res.json(result);
-        // return result;
+        // res.json(result);
+        return result;
       } catch (error) {
-        // console.log("error - ", error);
+        console.log("error - ", error);
         next(error);
       }
     };
