@@ -82,6 +82,7 @@ This project provides a RESTful API for managing job postings using:
    npm start
    ```
 
+## Base URL (deployed): `https://vasudeogaichor.site/job-board-backend/api`
 ## API Endpoints
 
 ### Job Postings
