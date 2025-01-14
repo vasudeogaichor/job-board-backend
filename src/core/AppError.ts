@@ -15,7 +15,7 @@ export default class AppError extends Error {
     Object.setPrototypeOf(this, AppError.prototype);
   }
 
-  static badRequest(message: string, errors: string[] = []): AppError {
+  static badRequest(message: string = "Bad Request", errors: string[] = []): AppError {
     return new AppError(message, 400, errors);
   }
 
