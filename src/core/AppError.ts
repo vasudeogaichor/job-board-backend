@@ -26,7 +26,7 @@ export default class AppError extends Error {
   static notFound(message: string = "Not found"): AppError {
     return new AppError(message, 404);
   }
-  
+
   static internalServerError(
     message: string = "Internal Server Error"
   ): AppError {

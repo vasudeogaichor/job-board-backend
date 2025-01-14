@@ -73,7 +73,6 @@ export default class AuthController {
     res: ExpressResponse
   ): Promise<ExpressResponse> {
     const result = await jobRepository.softDelete(req.params.jobId);
-    console.log("result - ", result);
     if (result.affected === 0) {
       throw AppError.notFound("Job not found");
     }
