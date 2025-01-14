@@ -1,24 +1,25 @@
 version: '3.9'
 
 services:
-  # backend:
-  #   container_name: express-backend
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3005:3005"
-  #   volumes:
-  #     - .:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     - DB_HOST=db
-  #     - DB_PORT=3306
-  #     - DB_USER=root
-  #     - DB_PASSWORD=example
-  #     - DB_NAME=job_board
+  backend:
+    container_name: job-board-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=example
+      - DB_NAME=job_board
+      - PORT=3005
 
   db:
     container_name: mysql-db
